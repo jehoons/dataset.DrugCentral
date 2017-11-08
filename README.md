@@ -1,6 +1,6 @@
 ### Install  
 
-```
+```bash
 git clone git@github.com:docker-library/postgres.git
 
 docker build -t drugcentral postgres/10/
