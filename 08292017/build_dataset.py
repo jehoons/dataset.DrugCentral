@@ -14,7 +14,8 @@ import pandas as pd
 
 
 datasets_url = 'http://192.168.0.97/share/StandigmDB/datasets'
-scratch_dir = '.'
+
+scratch_dir = 'scratch'
 
 def download(remote_dir=None, filename=None, local_dir=None, force=False):
 
@@ -53,7 +54,7 @@ def load_version201710():
     def load_structure():
         
         localfile = download(remote_dir=join(datasets_url,'drug_central','2017-10'), 
-            filename='structures.smiles.tsv')
+            filename='structures.smiles.tsv', local_dir='scratch')
         
         dataset = pd.read_csv(localfile, sep='\t')
 
@@ -63,6 +64,7 @@ def load_version201710():
     chkfile_2 = join(scratch_dir, 'chk-drugcentral-v201710-activeingredient.csv')
     chkfile_3 = join(scratch_dir, 'chk-drugcentral-v201710-act-table-fulll.csv')
 
+    os.system('mkdir -p %s' % scratch_dir)
 
     if exists(chkfile_2) and exists(chkfile_1) and exists(chkfile_3):
         pharma_class = pd.read_csv(chkfile_1) 
@@ -97,6 +99,8 @@ def load_version201710():
 def test_run():    
     import pickle 
     dataset = load()
-    with open(join(scratch_dir, 'prcessed-drugcentral-v201710.pkl'),'wb') as fobj:
+    with open(join(scratch_dir, 'processed-drugcentral-v201710.pkl'),'wb') as fobj:
         pickle.dump(dataset, fobj)
 
+
+    set_trace()
